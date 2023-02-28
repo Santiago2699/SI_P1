@@ -1,7 +1,7 @@
-package es.udc.sistemasinteligentes.ejemploModificado;
+package es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ejemploModificado;
 
-import es.udc.sistemasinteligentes.EstrategiaBusqueda;
-import es.udc.sistemasinteligentes.ProblemaBusqueda;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.EstrategiaBusqueda;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ProblemaBusqueda;
 
 import java.util.ArrayList;
 

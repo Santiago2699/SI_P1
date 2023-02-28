@@ -1,24 +1,30 @@
-package es.udc.sistemasinteligentes.ejemploModificado;
+package es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ejemploModificado;
 
-import es.udc.sistemasinteligentes.Accion;
-import es.udc.sistemasinteligentes.Estado;
-import es.udc.sistemasinteligentes.EstrategiaBusqueda;
-import es.udc.sistemasinteligentes.ProblemaBusqueda;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Accion;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Estado;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.EstrategiaBusqueda;
+import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ProblemaBusqueda;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
-public class Estrategia4 implements EstrategiaBusqueda {
+public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
-    public Estrategia4() {
+    public EstrategiaBusquedaGrafo() {
     }
 
     @Override
     public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
         ArrayList<Estado> explorados = new ArrayList<>();
         Estado estadoActual = p.getEstadoInicial();
+        Queue<Nodo> frontera = new ArrayDeque<>();
+
         explorados.add(estadoActual);
         Nodo padre = new Nodo(estadoActual, null,null);
         Nodo nodo = null;
+        frontera.offer(padre);
         int i = 1;
 
         System.out.println((i++) + " - Empezando búsqueda en " + estadoActual);
