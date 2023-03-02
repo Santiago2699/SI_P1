@@ -17,7 +17,7 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
     @Override
     public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
-        ArrayList<Estado> explorados = new ArrayList<>();
+        ArrayList<Nodo> explorados = new ArrayList<>();
         Estado estadoActual = p.getEstadoInicial();
         Queue<Nodo> frontera = new ArrayDeque<>();
 
@@ -29,8 +29,11 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         System.out.println((i++) + " - Empezando búsqueda en " + estadoActual);
 
-        while (!p.esMeta(estadoActual)) {
-            System.out.println((i++) + " - " + estadoActual + " no es meta");
+        while (!frontera.isEmpty()) {
+            nodo = frontera.poll();
+            estadoActual = nodo.getEstado();
+            if(p.esMeta(estadoActual))
+                return reconstruye_sol(nodo);
             Accion[] accionesDisponibles = p.acciones(estadoActual);
             boolean modificado = false;
             for (Accion acc : accionesDisponibles) {
@@ -47,11 +50,9 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
                 } else
                     System.out.println((i++) + " - " + sc + " ya explorado");
             }
-            if (!modificado) throw new Exception("No se ha podido encontrar una solución");
             padre = nodo;
         }
-        System.out.println((i++) + " - FIN - " + estadoActual);
-        return reconstruye_sol(nodo);
+        throw new Exception("No se ha encontrado solucion");
     }
 
     public static ArrayList<Nodo> reconstruye_sol(Nodo nodo) {

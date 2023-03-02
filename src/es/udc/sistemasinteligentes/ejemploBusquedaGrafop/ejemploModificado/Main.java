@@ -6,7 +6,7 @@ import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ProblemaBusqueda;
 import java.util.ArrayList;
 
 public class Main {
-
+/*
     public static void main(String[] args) throws Exception {
         ProblemaAspiradora.EstadoAspiradora estadoInicial = new ProblemaAspiradora.EstadoAspiradora(ProblemaAspiradora.EstadoAspiradora.PosicionRobot.IZQ,
                                                                                                     ProblemaAspiradora.EstadoAspiradora.PosicionBasura.AMBAS);
@@ -24,5 +24,5 @@ public class Main {
             System.out.println("Estado actual: " + nodo.getEstado().toString());
 
         }
-    }
+    }*/
 }
