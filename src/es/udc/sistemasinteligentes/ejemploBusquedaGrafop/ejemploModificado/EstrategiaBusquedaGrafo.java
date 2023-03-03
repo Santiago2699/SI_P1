@@ -20,10 +20,12 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
         ArrayList<Nodo> explorados = new ArrayList<>();
         Estado estadoActual = p.getEstadoInicial();
         Queue<Nodo> frontera = new ArrayDeque<>();
-
-        explorados.add(estadoActual);
+        ArrayList<Nodo> hijos = new ArrayList<>();
         Nodo padre = new Nodo(estadoActual, null,null);
         Nodo nodo = null;
+
+        explorados.add(padre);
+
         frontera.offer(padre);
         int i = 1;
 
@@ -34,21 +36,21 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
             estadoActual = nodo.getEstado();
             if(p.esMeta(estadoActual))
                 return reconstruye_sol(nodo);
-            Accion[] accionesDisponibles = p.acciones(estadoActual);
-            boolean modificado = false;
-            for (Accion acc : accionesDisponibles) {
-                Estado sc = p.result(estadoActual, acc);
-                nodo = new Nodo(sc, padre, acc);
-                System.out.println((i++) + " - RESULT(" + estadoActual + "," + acc + ")=" + sc);
-                if (!explorados.contains(sc)) {
-                    estadoActual = sc;
-                    System.out.println((i++) + " - " + sc + " NO explorado");
-                    explorados.add(estadoActual);
-                    modificado = true;
-                    System.out.println((i++) + " - Estado actual cambiado a " + estadoActual);
-                    break;
-                } else
-                    System.out.println((i++) + " - " + sc + " ya explorado");
+            explorados.add(nodo);
+            hijos = sucesores(nodo, p);
+            for (Nodo nh : hijos) {
+                boolean noInsertar = false;
+                for (Nodo e: explorados){
+                    noInsertar = e.getEstado().equals(nh.getEstado());
+                   if(noInsertar) break;
+                }
+                if(!noInsertar){
+                    for(Nodo f: frontera){
+                        noInsertar = f.getEstado().equals(nh.getEstado());
+                        if(noInsertar) break;
+                    }
+                }
+                if(!noInsertar) frontera.offer(nh);
             }
             padre = nodo;
         }
@@ -64,5 +66,15 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
             actual = actual.getPadre();
         }
         return solucion;
+    }
+
+    public static ArrayList<Nodo> sucesores(Nodo nodo, ProblemaBusqueda p){
+        ArrayList<Nodo> sucesores = new ArrayList<>();
+        Estado estado = nodo.getEstado();
+        Accion[] accionesDisp = p.acciones(estado);
+        for(Accion acc : accionesDisp){
+            sucesores.add(new Nodo(p.result(estado, acc), nodo, acc));
+        }
+        return sucesores;
     }
 }

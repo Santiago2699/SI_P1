@@ -4,6 +4,8 @@ import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Accion;
 import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Estado;
 import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ProblemaBusqueda;
 
+import java.util.Objects;
+
 public class ProblemaAspiradora extends ProblemaBusqueda {
     public static class EstadoAspiradora extends Estado {
         public enum PosicionRobot {IZQ, DER};
@@ -45,6 +47,19 @@ public class ProblemaAspiradora extends ProblemaBusqueda {
         public enum Tipo {IZQ, DER, ASP};
 
         private Tipo tipo;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AccionAspiradora that = (AccionAspiradora) o;
+            return tipo == that.tipo;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(tipo);
+        }
 
         public AccionAspiradora(Tipo tipo) {
             this.tipo = tipo;

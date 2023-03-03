@@ -3,6 +3,8 @@ package es.udc.sistemasinteligentes.ejemploBusquedaGrafop.ejemploModificado;
 import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Accion;
 import es.udc.sistemasinteligentes.ejemploBusquedaGrafop.Estado;
 
+import java.util.Objects;
+
 public class Nodo {
     private Estado estado;
     private Nodo padre;
@@ -25,4 +27,5 @@ public class Nodo {
     public Accion getAccion() {
         return accion;
     }
+
 }
