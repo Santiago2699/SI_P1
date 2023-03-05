@@ -1,6 +1,7 @@
 package es.udc.sistemasinteligentes.ejemplo;
 
 import es.udc.sistemasinteligentes.*;
+import es.udc.sistemasinteligentes.problemaCuadradoMagico.Nodo;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,12 @@ public class Estrategia4 implements EstrategiaBusqueda {
     }
 
     @Override
-    public ArrayList soluciona(ProblemaBusqueda p) throws Exception{
+    public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
+        return null;
+    }
+
+  /*  @Override
+    public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception{
         ArrayList<Estado> explorados = new ArrayList<Estado>();
         Estado estadoActual = p.getEstadoInicial();
         explorados.add(estadoActual);
@@ -41,5 +47,5 @@ public class Estrategia4 implements EstrategiaBusqueda {
         }
         System.out.println((i++) + " - FIN - " + estadoActual);
         return null;
-    }
+    }*/
 }

@@ -4,6 +4,7 @@ import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
+import es.udc.sistemasinteligentes.problemaCuadradoMagico.Nodo;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,11 @@ public class Estrategia4 implements EstrategiaBusqueda {
     }
 
     @Override
+    public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
+        return null;
+    }
+
+   /* @Override
     public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
         ArrayList<Estado> explorados = new ArrayList<>();
         Estado estadoActual = p.getEstadoInicial();
@@ -57,5 +63,5 @@ public class Estrategia4 implements EstrategiaBusqueda {
             actual = actual.getPadre();
         }
         return solucion;
-    }
+    }*/
 }
