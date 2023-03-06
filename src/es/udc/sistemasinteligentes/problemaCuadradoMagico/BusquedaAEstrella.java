@@ -43,14 +43,24 @@ public class BusquedaAEstrella implements EstrategiaBusquedaInformada {
                     noInsertar = e.getEstado().equals(nh.getEstado());
                     if(noInsertar) break;
                 }
-                for (NodoA f: frontera) {
-
-
+                if(!noInsertar) {
+                    for (NodoA f : frontera) {
+                        noInsertar = f.getEstado().equals(nh.getEstado());
+                        if(noInsertar){
+                            if(nh.getF() < f.getF()){
+                                frontera.remove(f);
+                                noInsertar = false;
+                            }
+                            break;
+                        }
+                    }
+                    if(!noInsertar)
+                        frontera.offer(nh);
                 }
             }
 
         }
-        return null;
+        throw new Exception("No se ha encontrado solucion");
     }
 
     public static ArrayList<NodoA> reconstruye_sol(NodoA nodo) {

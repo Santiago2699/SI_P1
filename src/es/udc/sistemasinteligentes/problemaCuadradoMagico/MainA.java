@@ -1,21 +1,25 @@
 package es.udc.sistemasinteligentes.problemaCuadradoMagico;
 
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
+import es.udc.sistemasinteligentes.EstrategiaBusquedaInformada;
+import es.udc.sistemasinteligentes.Heuristica;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
 
 import java.util.ArrayList;
 
-public class Main {
+public class MainA {
     public static void main(String[] args) throws Exception {
-        int[][] tablero = {{4,9,2},{3,5,0},{0,1,0}};
+        int[][] tablero = {{2,0,0},{0,0,0},{0,0,0}};
         ProblemaCuadradoMagico.EstadoCuadradoMagico estadoInicial =
                 new ProblemaCuadradoMagico.EstadoCuadradoMagico(tablero, 3);
 
         ProblemaBusqueda cuadradoMagico = new ProblemaCuadradoMagico(estadoInicial);
 
-        EstrategiaBusqueda buscador = new BusquedaEnProfundidad();
-        Nodo nodo = null;
-        ArrayList<Nodo> solucion = buscador.soluciona(cuadradoMagico);
+        EstrategiaBusquedaInformada buscador = new BusquedaAEstrella();
+        Heuristica heuristica = new ProblemaCuadradoMagico.HeuristicaCuadradoMagico();
+
+        NodoA nodo = null;
+        ArrayList<NodoA> solucion = buscador.soluciona(cuadradoMagico, heuristica);
         System.out.println("Camino para llegar a la solucion");
         for (int i = solucion.size()-1; i >= 0; i--){
             nodo = solucion.get(i);
