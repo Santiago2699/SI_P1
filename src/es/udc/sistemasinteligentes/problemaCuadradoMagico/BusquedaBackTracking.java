@@ -13,47 +13,16 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
     public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
         ArrayList<Nodo> explorados = new ArrayList<>();
         Estado estadoActual = p.getEstadoInicial();
-        Stack<Nodo> frontera = new Stack<>();
-        ArrayList<Nodo> hijos = new ArrayList<>();
+
         Nodo padre = new Nodo(estadoActual, null,null);
         Nodo nodo = null;
 
-        explorados.add(padre);
-        frontera.push(padre);
-        int expandidos = 0;
-        int creados = 0;
-
         System.out.println(" - Empezando búsqueda en " + "\n"+estadoActual);
 
-        while (!frontera.isEmpty()) {
-            nodo = frontera.pop();
-            expandidos++;
-            estadoActual = nodo.getEstado();
-            if(p.esMeta(estadoActual)) {
-                System.out.println("NODOS expandidos: " +expandidos);
-                System.out.println("NODOS creados: " + creados);
-                return reconstruye_sol(nodo);
-            }
-            explorados.add(nodo);
-            hijos = sucesores(nodo, p);
-            creados += hijos.size();
-            for (Nodo nh : hijos) {
-                boolean noInsertar = false;
-                for (Nodo e: explorados){
-                    noInsertar = e.getEstado().equals(nh.getEstado());
-                    if(noInsertar) break;
-                }
-                if(!noInsertar){
-                    for(Nodo f: frontera){
-                        noInsertar = f.getEstado().equals(nh.getEstado());
-                        if(noInsertar) break;
-                    }
-                }
-                if(!noInsertar) frontera.push(nh);
-            }
-            padre = nodo;
-        }
-        throw new Exception("No se ha encontrado solucion");
+        if((nodo = sucesores(padre, p, explorados)) != null)
+            return reconstruye_sol(nodo);
+        else
+            throw new Exception("No se ha encontrado solucion");
     }
 
     public static ArrayList<Nodo> reconstruye_sol(Nodo nodo) {
@@ -67,7 +36,34 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
         return solucion;
     }
 
-    public static ArrayList<Nodo> sucesores(Nodo nodo, ProblemaBusqueda p){
+    public static Nodo sucesores(Nodo nodo, ProblemaBusqueda p, ArrayList<Nodo> explorados){
+        ProblemaCuadradoMagico.EstadoCuadradoMagico estado = (ProblemaCuadradoMagico.EstadoCuadradoMagico) nodo.getEstado();
+        if(p.esMeta(nodo.getEstado()))
+            return nodo;
+        for (Nodo e: explorados){
+            if(e.getEstado().equals(nodo.getEstado())) //existe en explorados
+                return null;
+        }
+        if (estado.tableroLleno())
+            return null;
+
+        Estado estaduwu = nodo.getEstado();
+        Estado prueba = null;
+        Accion[] accionesDisp = p.acciones(estaduwu);
+        Nodo meta = null;
+        explorados.add(nodo);
+        for(Accion acc : accionesDisp){
+            prueba = p.result(estaduwu,acc);
+            Nodo neuwu = new Nodo(prueba, nodo, acc);
+            meta = sucesores(neuwu, p, explorados);
+            if(meta != null)
+                break;
+
+        }
+        return meta;
+    }
+
+    /*public static ArrayList<Nodo> sucesores(Nodo nodo, ProblemaBusqueda p){
         ArrayList<Nodo> sucesores = new ArrayList<>();
         Estado estado = nodo.getEstado();
         Estado prueba = null;
@@ -77,5 +73,7 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
             sucesores.add(new Nodo(prueba, nodo, acc));
         }
         return sucesores;
-    }
+    }*/
+
+
 }

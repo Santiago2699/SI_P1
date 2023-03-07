@@ -45,6 +45,16 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             return result;
         }
 
+        public boolean tableroLleno(){
+            for (int i = 0; i < tamano ; i++) {
+                for (int j = 0; j < tamano; j++) {
+                    if(estadoCuadrado[i][j] == 0)
+                        return false;
+                }
+            }
+            return true;
+        }
+
     }
 
     public static class AccionesCuadradoMagico extends Accion{
