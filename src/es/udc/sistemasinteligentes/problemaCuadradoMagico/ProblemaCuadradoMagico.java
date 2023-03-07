@@ -68,6 +68,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         @Override
         public boolean esAplicable(Estado es) {
             EstadoCuadradoMagico s = (EstadoCuadradoMagico) es;
+            int column = 0, row = 0, diag1 = 0, diag2 = 0;
+            int numMagico = s.tamano *(s.tamano*s.tamano + 1)/2;
            if(s.estadoCuadrado[fila][columna] == 0){
                for (int i = 0; i < s.tamano; i++){
                    for (int j = 0; j < s.tamano; j++){
@@ -75,8 +77,16 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
                            return false;
                    }
                }
-               return true;
-           }else 
+             for (int i = 0; i < s.tamano; i++) {
+                   row += s.estadoCuadrado[fila][i];
+                   column += s.estadoCuadrado[i][columna];
+                   diag1 += s.estadoCuadrado[i][i];
+                   diag2 += s.estadoCuadrado[i][s.tamano-i-1];
+               }
+
+               return fila <= numMagico && columna <= numMagico && diag2 <= numMagico && diag1 <= numMagico;
+           }else
+
                return false;
         }
 
@@ -104,7 +114,24 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     }
 
     public static class HeuristicaCuadradoMagico extends Heuristica {
-        @Override
+        public float evalua(Estado e) {
+            EstadoCuadradoMagico s = (EstadoCuadradoMagico) e;
+            int[][] state = s.estadoCuadrado;
+            int n = state.length;
+            int sum = 0;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    int value = state[i][j];
+                    if (value != 0) { // skip the empty cell
+                        int goalX = (value - 1) / n;
+                        int goalY = (value - 1) % n;
+                        sum += Math.abs(i - goalX) + Math.abs(j - goalY);
+                    }
+                }
+            }
+            return sum;
+        }
+      /*  @Override
         public float evalua(Estado e) {
             EstadoCuadradoMagico s = (EstadoCuadradoMagico) e;
             float heuristica = 0, filas = 0, columnas = 0, diagonal1 = 0, diagonal2 = 0;
@@ -122,7 +149,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             }
             heuristica += Math.abs(suma - diagonal1) + Math.abs(suma-diagonal2);
             return heuristica;
-        }
+        }*/
     }
 
     Accion[] acciones = null;

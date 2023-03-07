@@ -2,8 +2,10 @@ package es.udc.sistemasinteligentes.problemaCuadradoMagico;
 
 import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
+import es.udc.sistemasinteligentes.ejemploModificado.ProblemaAspiradora;
 
 public class NodoA implements Comparable<NodoA> {
+
     private final Estado estado;
     private final NodoA padre;
     private final Accion accion;
@@ -45,6 +47,7 @@ public class NodoA implements Comparable<NodoA> {
 
     @Override
     public int compareTo(NodoA o) {
-        return -1*Float.compare(o.f, this.f);
+        return Float.compare(o.f, this.f);
     }
+
 }
