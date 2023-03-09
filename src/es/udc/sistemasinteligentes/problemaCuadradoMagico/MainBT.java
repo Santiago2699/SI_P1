@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class MainBT {
     public static void main(String[] args) throws Exception {
-        int[][] tablero = {{4,0,0},{0,0,0},{0,1,0}};
+        //int[][] tablero = {{2,0,0,0},{0,0,0,0},{0,0,0,0},{0,1,0,0}};
+        int[][] tablero = {{4,0,0},{0,0,0},{0,0,0}};
         ProblemaCuadradoMagico.EstadoCuadradoMagico estadoInicial =
                 new ProblemaCuadradoMagico.EstadoCuadradoMagico(tablero, 3);
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MainA {
     public static void main(String[] args) throws Exception {
-        int[][] tablero = {{4,0,2},{0,0,0},{0,0,0}};
+        int[][] tablero = {{4,0,0},{0,0,0},{0,0,0}};
         ProblemaCuadradoMagico.EstadoCuadradoMagico estadoInicial =
                 new ProblemaCuadradoMagico.EstadoCuadradoMagico(tablero, 3);
 

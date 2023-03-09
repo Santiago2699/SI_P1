@@ -12,8 +12,8 @@ import java.util.Objects;
 public class ProblemaCuadradoMagico extends ProblemaBusqueda {
 
     public static class EstadoCuadradoMagico extends Estado{
-        private int[][] estadoCuadrado;
-        private int tamano;
+         int[][] estadoCuadrado;
+         int tamano;
 
         public EstadoCuadradoMagico(int[][] estadoCuadrado, int tamano){
             this.estadoCuadrado = estadoCuadrado;
@@ -79,22 +79,28 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         public boolean esAplicable(Estado es) {
             EstadoCuadradoMagico s = (EstadoCuadradoMagico) es;
             int column = 0, row = 0, diag1 = 0, diag2 = 0;
+            boolean columnB = true, rowB = true, diag1B = true, diag2B = true;
             int numMagico = s.tamano *(s.tamano*s.tamano + 1)/2;
            if(s.estadoCuadrado[fila][columna] == 0){
                for (int i = 0; i < s.tamano; i++){
+                   rowB = rowB && s.estadoCuadrado[fila][i] != 0;
+                   row += s.estadoCuadrado[fila][i];
+                   columnB = columnB && s.estadoCuadrado[i][columna] != 0;
+                   column += s.estadoCuadrado[i][columna];
+                   diag1B = diag1B && s.estadoCuadrado[i][i] != 0;
+                   diag1 += s.estadoCuadrado[i][i];
+                   diag2B = diag2B && s.estadoCuadrado[i][s.tamano-i-1] != 0;
+                   diag2 += s.estadoCuadrado[i][s.tamano-i-1];
                    for (int j = 0; j < s.tamano; j++){
                        if(s.estadoCuadrado[i][j] == contenido)
                            return false;
                    }
                }
-             for (int i = 0; i < s.tamano; i++) {
-                   row += s.estadoCuadrado[fila][i];
-                   column += s.estadoCuadrado[i][columna];
-                   diag1 += s.estadoCuadrado[i][i];
-                   diag2 += s.estadoCuadrado[i][s.tamano-i-1];
-               }
 
-               return fila <= numMagico && columna <= numMagico && diag2 <= numMagico && diag1 <= numMagico;
+
+               return fila <= numMagico && columna <= numMagico && diag2 <= numMagico && diag1 <= numMagico &&
+                       !(rowB && row < numMagico) && !(columnB && column < numMagico) && !(diag1B && diag1 < numMagico)
+                       && !(diag2B && diag2 < numMagico);
            }else
 
                return false;
