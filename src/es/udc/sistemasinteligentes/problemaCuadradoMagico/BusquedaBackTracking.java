@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class BusquedaBackTracking implements EstrategiaBusqueda {
-    static int explorados = 1;
+    static long explorados = 1;
     @Override
     public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception {
         Estado estadoActual = p.getEstadoInicial();
-
+        Stack<Nodo> frontera = new Stack<>();
         Nodo padre = new Nodo(estadoActual, null,null);
         Nodo nodo = null;
-
+        frontera.push(padre);
         System.out.println(" - Empezando búsqueda en " + "\n"+estadoActual);
 
-        if((nodo = sucesores(padre, p)) != null) {
+        if((nodo = sucesores( p, frontera)) != null) {
             System.out.println(explorados);
             return reconstruye_sol(nodo);
         }
@@ -38,7 +38,8 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
         return solucion;
     }
 
-    public static Nodo sucesores(Nodo nodo, ProblemaBusqueda p){
+    public static Nodo sucesores(ProblemaBusqueda p, Stack<Nodo> frontera){
+        Nodo nodo = frontera.peek();
         EstadoCuadradoMagico estado = (EstadoCuadradoMagico) nodo.getEstado();
         if(p.esMeta(nodo.getEstado()))
             return nodo;
@@ -46,10 +47,11 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
         if (estado.tableroLleno())
             return null;
 
+
         Estado prueba = null;
         //Accion[] accionesDisp = p.acciones(estaduwu);
         Nodo meta = null;
-
+        boolean estaFron= false;
         for(int i = 0; i < estado.tamano; i++) {
             for (int j = 0; j < estado.tamano; j++) {
                 for (int k = 1; k <= estado.tamano* estado.tamano; k++) {
@@ -57,16 +59,26 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
                     if (acc.esAplicable(estado)){
                         prueba = p.result(estado,acc);
                         Nodo neuwu = new Nodo(prueba, nodo, acc);
-                        explorados++;
-                        meta = sucesores(neuwu, p);
-                        if(meta != null)
-                            break;
+                        for (Nodo n: frontera) {
+                            estaFron = n.getEstado().equals(neuwu.getEstado());
+                            if(estaFron)
+                                break;
+                        }
+                        if(!estaFron) {
+                            frontera.push(neuwu);
+                            explorados++;
+                            meta = sucesores(p, frontera);
+                            if (meta != null) {
+                                frontera.pop();
+                                return meta;
+                            }
+                        }
                     }
 
                 }
             }
         }
-
+        frontera.pop();
        /* for(Accion acc : accionesDisp){
             prueba = p.result(estaduwu,acc);
             Nodo neuwu = new Nodo(prueba, nodo, acc);
@@ -75,7 +87,7 @@ public class BusquedaBackTracking implements EstrategiaBusqueda {
                 break;
 
         }*/
-        return meta;
+        return null;
     }
 
     /*public static ArrayList<Nodo> sucesores(Nodo nodo, ProblemaBusqueda p){

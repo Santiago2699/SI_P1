@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class MainA {
     public static void main(String[] args) throws Exception {
+        long time = System.currentTimeMillis();
         int[][] tablero = {{4,0,0},{0,0,0},{0,0,0}};
         ProblemaCuadradoMagico.EstadoCuadradoMagico estadoInicial =
                 new ProblemaCuadradoMagico.EstadoCuadradoMagico(tablero, 3);
@@ -29,5 +30,6 @@ public class MainA {
             System.out.println("Estado actual: " +"\n"+ nodo.getEstado().toString());
 
         }
+        System.out.println(((System.currentTimeMillis()- time)/1000)/60);
     }
 }

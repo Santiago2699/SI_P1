@@ -81,7 +81,9 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             int column = 0, row = 0, diag1 = 0, diag2 = 0;
             boolean columnB = true, rowB = true, diag1B = true, diag2B = true;
             int numMagico = s.tamano *(s.tamano*s.tamano + 1)/2;
+
            if(s.estadoCuadrado[fila][columna] == 0){
+               s.estadoCuadrado[fila][columna] = contenido;
                for (int i = 0; i < s.tamano; i++){
                    rowB = rowB && s.estadoCuadrado[fila][i] != 0;
                    row += s.estadoCuadrado[fila][i];
@@ -92,15 +94,17 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
                    diag2B = diag2B && s.estadoCuadrado[i][s.tamano-i-1] != 0;
                    diag2 += s.estadoCuadrado[i][s.tamano-i-1];
                    for (int j = 0; j < s.tamano; j++){
-                       if(s.estadoCuadrado[i][j] == contenido)
+                       if(s.estadoCuadrado[i][j] == contenido && (i != fila || j != columna)) {
+                           s.estadoCuadrado[fila][columna] = 0;
                            return false;
+                       }
                    }
                }
-
+               s.estadoCuadrado[fila][columna] = 0;
 
                return fila <= numMagico && columna <= numMagico && diag2 <= numMagico && diag1 <= numMagico &&
-                       !(rowB && row < numMagico) && !(columnB && column < numMagico) && !(diag1B && diag1 < numMagico)
-                       && !(diag2B && diag2 < numMagico);
+                       !(rowB && (row < numMagico)) && !(columnB && (column < numMagico)) && !(diag1B && (diag1 < numMagico))
+                      && !(diag2B && (diag2 < numMagico));
            }else
 
                return false;
@@ -119,12 +123,10 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             if (original == null) {
                 return null;
             }
-
             int[][] copy = new int[original.length][];
             for (int i = 0; i < original.length; i++) {
                 copy[i] = Arrays.copyOf(original[i], original[i].length);
             }
-
             return copy;
         }
     }
@@ -147,7 +149,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             }
             return sum;
         }
-      /*  @Override
+        /*@Override
         public float evalua(Estado e) {
             EstadoCuadradoMagico s = (EstadoCuadradoMagico) e;
             float heuristica = 0, filas = 0, columnas = 0, diagonal1 = 0, diagonal2 = 0;
@@ -164,7 +166,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
 
             }
             heuristica += Math.abs(suma - diagonal1) + Math.abs(suma-diagonal2);
-            return heuristica;
+            return -1*heuristica;
         }*/
     }
 
